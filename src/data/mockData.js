@@ -172,20 +172,50 @@ export const gasData = {
 
 // Top gainers
 export const topGainers = [
-  { rank: 1, symbol: 'PEPE', name: 'Pepe', price: 0.0000234, change24h: 28.45, volume: 2.3e9 },
-  { rank: 2, symbol: 'BONK', name: 'Bonk', price: 0.0000412, change24h: 22.18, volume: 1.8e9 },
-  { rank: 3, symbol: 'WIF', name: 'dogwifhat', price: 2.85, change24h: 18.92, volume: 980e6 },
-  { rank: 4, symbol: 'FLOKI', name: 'Floki', price: 0.000285, change24h: 15.67, volume: 650e6 },
-  { rank: 5, symbol: 'SHIB', name: 'Shiba Inu', price: 0.0000285, change24h: 12.34, volume: 1.2e9 }
+  { rank: 1, id: 'pepe', symbol: 'PEPE', name: 'Pepe', price: 0.0000234, change24h: 28.45, volume: 2.3e9, marketCap: 9.8e9 },
+  { rank: 2, id: 'bonk', symbol: 'BONK', name: 'Bonk', price: 0.0000412, change24h: 22.18, volume: 1.8e9, marketCap: 2.5e9 },
+  { rank: 3, id: 'dogwifcoin', symbol: 'WIF', name: 'dogwifhat', price: 2.85, change24h: 18.92, volume: 980e6, marketCap: 2.8e9 },
+  { rank: 4, id: 'floki', symbol: 'FLOKI', name: 'Floki', price: 0.000285, change24h: 15.67, volume: 650e6, marketCap: 2.7e9 },
+  { rank: 5, id: 'shiba-inu', symbol: 'SHIB', name: 'Shiba Inu', price: 0.0000285, change24h: 12.34, volume: 1.2e9, marketCap: 16.8e9 },
+  { rank: 6, id: 'render-token', symbol: 'RNDR', name: 'Render', price: 10.25, change24h: 11.89, volume: 420e6, marketCap: 5.3e9 },
+  { rank: 7, id: 'injective-protocol', symbol: 'INJ', name: 'Injective', price: 35.80, change24h: 10.45, volume: 380e6, marketCap: 3.4e9 },
+  { rank: 8, id: 'fetch-ai', symbol: 'FET', name: 'Fetch.ai', price: 2.35, change24h: 9.78, volume: 290e6, marketCap: 2.0e9 },
+  { rank: 9, id: 'sui', symbol: 'SUI', name: 'Sui', price: 1.85, change24h: 8.92, volume: 520e6, marketCap: 2.3e9 },
+  { rank: 10, id: 'sei-network', symbol: 'SEI', name: 'Sei', price: 0.78, change24h: 8.45, volume: 180e6, marketCap: 2.1e9 },
+  { rank: 11, id: 'the-graph', symbol: 'GRT', name: 'The Graph', price: 0.32, change24h: 7.89, volume: 145e6, marketCap: 3.0e9 },
+  { rank: 12, id: 'arweave', symbol: 'AR', name: 'Arweave', price: 42.50, change24h: 7.23, volume: 95e6, marketCap: 2.8e9 },
+  { rank: 13, id: 'stacks', symbol: 'STX', name: 'Stacks', price: 2.15, change24h: 6.78, volume: 120e6, marketCap: 3.1e9 },
+  { rank: 14, id: 'theta-token', symbol: 'THETA', name: 'Theta Network', price: 2.45, change24h: 6.34, volume: 85e6, marketCap: 2.5e9 },
+  { rank: 15, id: 'gala', symbol: 'GALA', name: 'Gala', price: 0.052, change24h: 5.89, volume: 210e6, marketCap: 1.8e9 },
+  { rank: 16, id: 'ondo-finance', symbol: 'ONDO', name: 'Ondo', price: 1.28, change24h: 5.45, volume: 165e6, marketCap: 1.7e9 },
+  { rank: 17, id: 'worldcoin-wld', symbol: 'WLD', name: 'Worldcoin', price: 4.85, change24h: 4.92, volume: 320e6, marketCap: 1.5e9 },
+  { rank: 18, id: 'conflux-token', symbol: 'CFX', name: 'Conflux', price: 0.24, change24h: 4.56, volume: 78e6, marketCap: 1.1e9 },
+  { rank: 19, id: 'beam-2', symbol: 'BEAM', name: 'Beam', price: 0.028, change24h: 4.12, volume: 95e6, marketCap: 1.4e9 },
+  { rank: 20, id: 'aevo', symbol: 'AEVO', name: 'Aevo', price: 1.45, change24h: 3.89, volume: 62e6, marketCap: 0.9e9 }
 ];
 
 // Top losers
 export const topLosers = [
-  { rank: 1, symbol: 'APT', name: 'Aptos', price: 8.45, change24h: -12.34, volume: 450e6 },
-  { rank: 2, symbol: 'ARB', name: 'Arbitrum', price: 1.12, change24h: -9.87, volume: 380e6 },
-  { rank: 3, symbol: 'OP', name: 'Optimism', price: 2.15, change24h: -8.56, volume: 320e6 },
-  { rank: 4, symbol: 'IMX', name: 'Immutable', price: 1.85, change24h: -7.23, volume: 180e6 },
-  { rank: 5, symbol: 'BLUR', name: 'Blur', price: 0.42, change24h: -6.89, volume: 95e6 }
+  { rank: 1, id: 'aptos', symbol: 'APT', name: 'Aptos', price: 8.45, change24h: -12.34, volume: 450e6, marketCap: 3.8e9 },
+  { rank: 2, id: 'arbitrum', symbol: 'ARB', name: 'Arbitrum', price: 1.12, change24h: -9.87, volume: 380e6, marketCap: 3.2e9 },
+  { rank: 3, id: 'optimism', symbol: 'OP', name: 'Optimism', price: 2.15, change24h: -8.56, volume: 320e6, marketCap: 2.5e9 },
+  { rank: 4, id: 'immutable-x', symbol: 'IMX', name: 'Immutable', price: 1.85, change24h: -7.23, volume: 180e6, marketCap: 2.8e9 },
+  { rank: 5, id: 'blur', symbol: 'BLUR', name: 'Blur', price: 0.42, change24h: -6.89, volume: 95e6, marketCap: 0.6e9 },
+  { rank: 6, id: 'lido-dao', symbol: 'LDO', name: 'Lido DAO', price: 2.35, change24h: -6.45, volume: 145e6, marketCap: 2.1e9 },
+  { rank: 7, id: 'maker', symbol: 'MKR', name: 'Maker', price: 2850, change24h: -5.92, volume: 125e6, marketCap: 2.6e9 },
+  { rank: 8, id: 'aave', symbol: 'AAVE', name: 'Aave', price: 142, change24h: -5.67, volume: 185e6, marketCap: 2.1e9 },
+  { rank: 9, id: 'thorchain', symbol: 'RUNE', name: 'THORChain', price: 5.25, change24h: -5.23, volume: 165e6, marketCap: 1.8e9 },
+  { rank: 10, id: 'gmx', symbol: 'GMX', name: 'GMX', price: 48.50, change24h: -4.89, volume: 42e6, marketCap: 0.5e9 },
+  { rank: 11, id: 'curve-dao-token', symbol: 'CRV', name: 'Curve DAO', price: 0.58, change24h: -4.56, volume: 95e6, marketCap: 0.7e9 },
+  { rank: 12, id: 'synthetix-network-token', symbol: 'SNX', name: 'Synthetix', price: 3.25, change24h: -4.23, volume: 78e6, marketCap: 1.1e9 },
+  { rank: 13, id: 'ens', symbol: 'ENS', name: 'Ethereum Name Service', price: 24.50, change24h: -3.89, volume: 85e6, marketCap: 0.8e9 },
+  { rank: 14, id: '1inch', symbol: '1INCH', name: '1inch', price: 0.52, change24h: -3.56, volume: 62e6, marketCap: 0.6e9 },
+  { rank: 15, id: 'compound-governance-token', symbol: 'COMP', name: 'Compound', price: 68.50, change24h: -3.23, volume: 55e6, marketCap: 0.6e9 },
+  { rank: 16, id: 'yearn-finance', symbol: 'YFI', name: 'yearn.finance', price: 8450, change24h: -2.89, volume: 35e6, marketCap: 0.3e9 },
+  { rank: 17, id: 'balancer', symbol: 'BAL', name: 'Balancer', price: 4.25, change24h: -2.56, volume: 28e6, marketCap: 0.3e9 },
+  { rank: 18, id: 'zcash', symbol: 'ZEC', name: 'Zcash', price: 28.50, change24h: -2.23, volume: 45e6, marketCap: 0.5e9 },
+  { rank: 19, id: 'decentraland', symbol: 'MANA', name: 'Decentraland', price: 0.48, change24h: -1.89, volume: 85e6, marketCap: 0.9e9 },
+  { rank: 20, id: 'the-sandbox', symbol: 'SAND', name: 'The Sandbox', price: 0.52, change24h: -1.56, volume: 95e6, marketCap: 1.2e9 }
 ];
 
 // Market statistics

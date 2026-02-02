@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 import { formatPrice, formatChange } from '../data/mockData';
 import { TickerCoinSkeleton } from './Skeleton';
@@ -21,8 +22,9 @@ const TickerBar = ({ coins = [], loading = false }) => {
           ))
         ) : (
           duplicatedCoins.map((coin, index) => (
-            <div
+            <Link
               key={`${coin.id}-${index}`}
+              to={`/coin/${coin.id}`}
               className="flex items-center gap-3 px-6 py-3 whitespace-nowrap border-r border-white/5 hover:bg-white/5 transition-colors cursor-pointer group"
             >
               {/* Coin icon - use API image or fallback */}
@@ -62,7 +64,7 @@ const TickerBar = ({ coins = [], loading = false }) => {
                   {formatChange(coin.change24h || 0)}
                 </span>
               </div>
-            </div>
+            </Link>
           ))
         )}
       </div>

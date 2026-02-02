@@ -60,7 +60,7 @@ const CoinsPage = () => {
   const SortHeader = ({ column, children }) => (
     <th
       onClick={() => handleSort(column)}
-      className="text-left font-medium pb-4 cursor-pointer hover:text-white transition-colors group"
+      className="text-left font-medium py-4 cursor-pointer hover:text-white transition-colors group"
     >
       <div className="flex items-center gap-1">
         {children}
@@ -94,12 +94,12 @@ const CoinsPage = () => {
               <tr className="text-[#a1a7bb] text-xs border-b border-white/5">
                 <th className="text-left font-medium p-4 w-12"></th>
                 <SortHeader column="market_cap_rank">#</SortHeader>
-                <th className="text-left font-medium pb-4 pt-4">Coin</th>
+                <th className="text-left font-medium py-4">Coin</th>
                 <SortHeader column="current_price">Price</SortHeader>
                 <SortHeader column="price_change_percentage_24h">24h %</SortHeader>
                 <SortHeader column="market_cap">Market Cap</SortHeader>
                 <SortHeader column="total_volume">Volume (24h)</SortHeader>
-                <th className="text-right font-medium pb-4 pt-4 pr-4 hidden lg:table-cell">Circulating Supply</th>
+                <th className="text-right font-medium py-4 pr-4 hidden lg:table-cell">Circulating Supply</th>
               </tr>
             </thead>
             <tbody>

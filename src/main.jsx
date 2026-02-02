@@ -12,6 +12,7 @@ import CoinsPage from './pages/CoinsPage';
 import CoinDetailPage from './pages/CoinDetailPage';
 import PortfolioPage from './pages/PortfolioPage';
 import WatchlistPage from './pages/WatchlistPage';
+import TopMoversPage from './pages/TopMoversPage';
 
 // Context Providers
 import { PortfolioProvider } from './context/PortfolioContext';
@@ -32,6 +33,7 @@ function App() {
               <Route path="coin/:id" element={<CoinDetailPage />} />
               <Route path="portfolio" element={<PortfolioPage />} />
               <Route path="watchlist" element={<WatchlistPage />} />
+              <Route path="movers/:type" element={<TopMoversPage />} />
             </Route>
           </Routes>
         </PortfolioProvider>

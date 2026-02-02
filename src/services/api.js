@@ -193,11 +193,13 @@ export async function fetchTopGainers(limit = 5) {
     .slice(0, limit)
     .map((coin, index) => ({
       rank: index + 1,
+      id: coin.id,
       symbol: coin.symbol.toUpperCase(),
       name: coin.name,
       price: coin.current_price,
       change24h: coin.price_change_percentage_24h,
       volume: coin.total_volume,
+      marketCap: coin.market_cap,
       image: coin.image,
     }));
 
@@ -237,11 +239,13 @@ export async function fetchTopLosers(limit = 5) {
     .slice(0, limit)
     .map((coin, index) => ({
       rank: index + 1,
+      id: coin.id,
       symbol: coin.symbol.toUpperCase(),
       name: coin.name,
       price: coin.current_price,
       change24h: coin.price_change_percentage_24h,
       volume: coin.total_volume,
+      marketCap: coin.market_cap,
       image: coin.image,
     }));
 

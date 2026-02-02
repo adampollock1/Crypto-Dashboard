@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { formatPrice, formatChange, formatNumber } from '../data/mockData';
 import { TableRowSkeleton } from './Skeleton';
@@ -63,11 +64,14 @@ const TopMovers = ({ gainers = [], losers = [], loading = false }) => {
               data.map((coin) => (
                 <tr
                   key={coin.symbol}
-                  className="border-t border-white/5 hover:bg-white/5 transition-colors cursor-pointer group"
+                  className="border-t border-white/5 hover:bg-white/5 transition-colors group"
                 >
                   <td className="py-3 text-[#a1a7bb] text-sm">{coin.rank}</td>
                   <td className="py-3">
-                    <div className="flex items-center gap-3">
+                    <Link 
+                      to={`/coin/${coin.id || coin.symbol.toLowerCase()}`}
+                      className="flex items-center gap-3"
+                    >
                       {/* Coin icon - use API image or fallback */}
                       {coin.image ? (
                         <img
@@ -93,7 +97,7 @@ const TopMovers = ({ gainers = [], losers = [], loading = false }) => {
                         </p>
                         <p className="text-[#a1a7bb] text-xs">{coin.name}</p>
                       </div>
-                    </div>
+                    </Link>
                   </td>
                   <td className="py-3 text-right">
                     <span className="text-white text-sm font-medium">
@@ -128,9 +132,12 @@ const TopMovers = ({ gainers = [], losers = [], loading = false }) => {
 
       {/* View All Link */}
       <div className="mt-4 pt-4 border-t border-white/5 text-center">
-        <button className="text-[#3861fb] text-sm font-medium hover:text-[#00d4aa] transition-colors">
+        <Link 
+          to={`/movers/${isGainers ? 'gainers' : 'losers'}`}
+          className="text-[#3861fb] text-sm font-medium hover:text-[#00d4aa] transition-colors"
+        >
           View All {isGainers ? 'Gainers' : 'Losers'} →
-        </button>
+        </Link>
       </div>
     </div>
   );
