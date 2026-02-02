@@ -17,6 +17,10 @@ import {
   topLosers as mockLosers,
   fearGreedIndex as mockFearGreed,
   dominanceData as mockDominance,
+  marketCapHistory,
+  volumeHistory,
+  dominanceHistory,
+  activeCoinsHistory,
 } from '../data/mockData';
 
 const REFRESH_INTERVAL = 60000; // 60 seconds
@@ -121,6 +125,11 @@ export function useCryptoData() {
 
   return {
     ...data,
+    // Historical data for sparkline charts
+    marketCapHistory,
+    volumeHistory,
+    dominanceHistory,
+    activeCoinsHistory,
     loading,
     error,
     lastUpdated,

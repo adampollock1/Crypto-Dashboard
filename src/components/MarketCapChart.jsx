@@ -8,7 +8,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import { TrendingUp, TrendingDown } from 'lucide-react';
+import { TrendingUp, TrendingDown, Activity } from 'lucide-react';
 import { marketCapHistory, marketStats as mockMarketStats, formatNumber } from '../data/mockData';
 
 const timeFilters = ['7D', '30D', '3M', '1Y', 'ALL'];
@@ -34,13 +34,13 @@ const MarketCapChart = ({ marketStats }) => {
   const data = getFilteredData();
   const isPositive = (stats.totalMarketCapChange || 0) >= 0;
 
-  // Custom tooltip
+  // Custom tooltip with glassmorphism
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-[#1a2332] border border-white/10 rounded-lg p-3 shadow-xl">
-          <p className="text-[#a1a7bb] text-xs mb-1">{payload[0].payload.formattedDate}</p>
-          <p className="text-white font-semibold">
+        <div className="glass-card-solid rounded-xl p-4 shadow-2xl shadow-black/30 border border-white/10 min-w-[140px]">
+          <p className="text-[#a1a7bb] text-xs mb-2 font-medium">{payload[0].payload.formattedDate}</p>
+          <p className="text-white font-bold text-lg tabular-nums">
             {formatNumber(payload[0].value)}
           </p>
         </div>
@@ -50,14 +50,20 @@ const MarketCapChart = ({ marketStats }) => {
   };
 
   return (
-    <div className="bg-[#1a2332] rounded-2xl p-6 border border-white/5">
+    <div className="group bg-[#1a2332]/80 backdrop-blur-sm rounded-2xl p-6 border border-white/5 hover:border-white/10 transition-all duration-300 relative overflow-hidden">
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#3861fb]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 relative">
         <div>
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-8 h-8 bg-[#3861fb]/10 rounded-lg flex items-center justify-center">
+              <Activity className="w-4 h-4 text-[#3861fb]" />
+            </div>
             <h3 className="text-[#a1a7bb] text-sm font-medium">Total Crypto Market Cap</h3>
             <span
-              className={`flex items-center gap-0.5 text-xs font-medium px-2 py-0.5 rounded-full ${
+              className={`flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full ${
                 isPositive
                   ? 'bg-[#00d4aa]/10 text-[#00d4aa]'
                   : 'bg-[#ea3943]/10 text-[#ea3943]'
@@ -68,34 +74,37 @@ const MarketCapChart = ({ marketStats }) => {
               ) : (
                 <TrendingDown className="w-3 h-3" />
               )}
-              {isPositive ? '+' : ''}{(stats.totalMarketCapChange || 0).toFixed(2)}%
+              <span className="tabular-nums">{isPositive ? '+' : ''}{(stats.totalMarketCapChange || 0).toFixed(2)}%</span>
             </span>
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-white">
+          <p className="text-2xl sm:text-3xl font-bold text-white tabular-nums tracking-tight">
             {formatNumber(stats.totalMarketCap || 0)}
           </p>
         </div>
 
         {/* Time Filter Buttons */}
-        <div className="flex gap-1 bg-[#0d1421] rounded-lg p-1">
+        <div className="flex gap-1 bg-[#0d1421]/80 rounded-xl p-1.5 backdrop-blur-sm">
           {timeFilters.map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
+              className={`relative px-3.5 py-2 text-xs font-semibold rounded-lg transition-all duration-300 ${
                 activeFilter === filter
-                  ? 'bg-[#3861fb] text-white'
-                  : 'text-[#a1a7bb] hover:text-white hover:bg-white/5'
+                  ? 'text-white'
+                  : 'text-[#a1a7bb] hover:text-white'
               }`}
             >
-              {filter}
+              {activeFilter === filter && (
+                <span className="absolute inset-0 bg-gradient-to-r from-[#3861fb] to-[#3861fb]/80 rounded-lg" />
+              )}
+              <span className="relative z-10">{filter}</span>
             </button>
           ))}
         </div>
       </div>
 
       {/* Chart */}
-      <div className="h-64 sm:h-80">
+      <div className="h-64 sm:h-80 relative">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={data}
@@ -103,8 +112,14 @@ const MarketCapChart = ({ marketStats }) => {
           >
             <defs>
               <linearGradient id="marketCapGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#3861fb" stopOpacity={0.3} />
-                <stop offset="95%" stopColor="#3861fb" stopOpacity={0} />
+                <stop offset="0%" stopColor="#3861fb" stopOpacity={0.4} />
+                <stop offset="50%" stopColor="#3861fb" stopOpacity={0.15} />
+                <stop offset="100%" stopColor="#3861fb" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="marketCapStroke" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#3861fb" />
+                <stop offset="50%" stopColor="#00d4aa" />
+                <stop offset="100%" stopColor="#3861fb" />
               </linearGradient>
             </defs>
             <CartesianGrid
@@ -116,25 +131,27 @@ const MarketCapChart = ({ marketStats }) => {
               dataKey="formattedDate"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: '#a1a7bb', fontSize: 11 }}
+              tick={{ fill: '#a1a7bb', fontSize: 11, fontWeight: 500 }}
               dy={10}
               interval="preserveStartEnd"
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: '#a1a7bb', fontSize: 11 }}
+              tick={{ fill: '#a1a7bb', fontSize: 11, fontWeight: 500 }}
               dx={-10}
               tickFormatter={(value) => `${(value / 1e12).toFixed(1)}T`}
               domain={['dataMin - 100000000000', 'dataMax + 100000000000']}
             />
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#3861fb', strokeWidth: 1, strokeDasharray: '4 4' }} />
             <Area
               type="monotone"
               dataKey="value"
               stroke="#3861fb"
-              strokeWidth={2}
+              strokeWidth={2.5}
               fill="url(#marketCapGradient)"
+              dot={false}
+              activeDot={{ r: 6, fill: '#3861fb', stroke: '#fff', strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>

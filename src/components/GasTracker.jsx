@@ -18,7 +18,6 @@ const GasTracker = () => {
         setIsUsingMockData(false);
         setLastUpdated(new Date());
       } else {
-        // Fallback to mock data
         setGasData(mockGasData);
         setIsUsingMockData(true);
       }
@@ -33,7 +32,6 @@ const GasTracker = () => {
 
   useEffect(() => {
     loadGasData();
-    // Refresh every 15 seconds
     const interval = setInterval(loadGasData, 15000);
     return () => clearInterval(interval);
   }, []);
@@ -45,6 +43,7 @@ const GasTracker = () => {
       icon: Clock,
       data: gasData.slow,
       color: '#3861fb',
+      gradient: 'from-[#3861fb]/20 to-[#3861fb]/10',
     },
     {
       type: 'standard',
@@ -52,6 +51,7 @@ const GasTracker = () => {
       icon: Fuel,
       data: gasData.standard,
       color: '#00d4aa',
+      gradient: 'from-[#00d4aa]/20 to-[#00d4aa]/10',
     },
     {
       type: 'fast',
@@ -59,26 +59,35 @@ const GasTracker = () => {
       icon: Zap,
       data: gasData.fast,
       color: '#f7931a',
+      gradient: 'from-[#f7931a]/20 to-[#f7931a]/10',
     },
   ];
 
   return (
-    <div className="bg-[#1a2332] rounded-2xl p-6 border border-white/5">
+    <div className="group bg-[#1a2332]/80 backdrop-blur-sm rounded-2xl p-6 border border-white/5 hover:border-white/10 transition-all duration-300 relative overflow-hidden">
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#f7931a]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h3 className="text-[#a1a7bb] text-sm font-medium mb-1">ETH Gas Tracker</h3>
-          <p className="text-lg font-bold text-white">Current Gas Prices</p>
+      <div className="flex items-center justify-between mb-6 relative">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-[#f7931a]/20 to-[#f7931a]/10 rounded-xl flex items-center justify-center">
+            <Flame className="w-5 h-5 text-[#f7931a]" />
+          </div>
+          <div>
+            <h3 className="text-[#a1a7bb] text-sm font-medium">ETH Gas Tracker</h3>
+            <p className="text-lg font-bold text-white">Gas Prices</p>
+          </div>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-xs text-[#a1a7bb]">
-            <Flame className="w-4 h-4 text-[#f7931a]" />
-            <span>Base: {gasData.baseFee} Gwei</span>
+          <div className="flex items-center gap-2 text-xs text-[#a1a7bb] px-2.5 py-1.5 bg-[#0d1421]/50 rounded-lg">
+            <span className="text-[#f7931a]">Base:</span>
+            <span className="text-white font-medium tabular-nums">{gasData.baseFee} Gwei</span>
           </div>
           <button
             onClick={loadGasData}
             disabled={loading}
-            className="p-1.5 text-[#a1a7bb] hover:text-white hover:bg-[#242d3d] rounded-lg transition-all disabled:opacity-50"
+            className="p-2 text-[#a1a7bb] hover:text-white hover:bg-white/10 rounded-lg transition-all btn-icon disabled:opacity-50"
             title="Refresh gas prices"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -87,65 +96,72 @@ const GasTracker = () => {
       </div>
 
       {/* Gas Cards */}
-      <div className="grid grid-cols-3 gap-3">
-        {gasLevels.map(({ type, label, icon: Icon, data, color }) => (
+      <div className="grid grid-cols-3 gap-3 relative">
+        {gasLevels.map(({ type, label, icon: Icon, data, color, gradient }) => (
           <div
             key={type}
-            className="bg-[#0d1421] rounded-xl p-4 border border-white/5 hover:border-white/10 transition-all duration-200 cursor-pointer group"
+            className="group/card relative bg-[#0d1421]/80 rounded-xl p-4 border border-white/5 hover:border-white/10 transition-all duration-300 cursor-pointer overflow-hidden"
           >
-            {/* Icon */}
-            <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 transition-transform group-hover:scale-110"
-              style={{ backgroundColor: `${color}20` }}
-            >
-              <Icon className="w-5 h-5" style={{ color }} />
-            </div>
+            {/* Hover gradient */}
+            <div 
+              className={`absolute inset-0 bg-gradient-to-br ${gradient} opacity-0 group-hover/card:opacity-100 transition-opacity duration-300`}
+            />
+            
+            <div className="relative">
+              {/* Icon */}
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center mb-3 transition-transform duration-300 group-hover/card:scale-110"
+                style={{ backgroundColor: `${color}15` }}
+              >
+                <Icon className="w-5 h-5" style={{ color }} />
+              </div>
 
-            {/* Label */}
-            <p className="text-[#a1a7bb] text-xs font-medium mb-1">{label}</p>
+              {/* Label */}
+              <p className="text-[#a1a7bb] text-xs font-medium mb-1 uppercase tracking-wide">{label}</p>
 
-            {/* Price */}
-            <p className="text-white text-xl font-bold mb-1">
-              {loading ? (
-                <span className="inline-block w-12 h-6 bg-[#242d3d] rounded animate-pulse" />
-              ) : (
-                <>
-                  {data.price}
-                  <span className="text-sm font-normal text-[#a1a7bb] ml-1">Gwei</span>
-                </>
-              )}
-            </p>
-
-            {/* Time */}
-            <p className="text-xs text-[#a1a7bb] mb-2">{data.time}</p>
-
-            {/* Cost */}
-            <div className="pt-2 border-t border-white/5">
-              <p className="text-xs text-[#a1a7bb]">
-                Est. Cost:{' '}
+              {/* Price */}
+              <p className="text-white text-2xl font-bold mb-1 tabular-nums">
                 {loading ? (
-                  <span className="inline-block w-10 h-3 bg-[#242d3d] rounded animate-pulse" />
+                  <span className="inline-block w-12 h-7 bg-[#242d3d] rounded shimmer" />
                 ) : (
-                  <span className="text-white font-medium">${data.costUsd.toFixed(2)}</span>
+                  <>
+                    {data.price}
+                    <span className="text-sm font-normal text-[#a1a7bb] ml-1">Gwei</span>
+                  </>
                 )}
               </p>
+
+              {/* Time */}
+              <p className="text-xs text-[#a1a7bb] mb-3">{data.time}</p>
+
+              {/* Cost */}
+              <div className="pt-3 border-t border-white/5">
+                <p className="text-xs text-[#a1a7bb]">
+                  Est. Cost:{' '}
+                  {loading ? (
+                    <span className="inline-block w-10 h-3 bg-[#242d3d] rounded shimmer" />
+                  ) : (
+                    <span className="text-white font-semibold tabular-nums">${data.costUsd.toFixed(2)}</span>
+                  )}
+                </p>
+              </div>
             </div>
           </div>
         ))}
       </div>
 
       {/* Footer */}
-      <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-[#a1a7bb]">
+      <div className="mt-5 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-[#a1a7bb] relative">
         <span>
           {gasData.lastBlock ? (
-            <>Last Block: #{gasData.lastBlock.toLocaleString()}</>
+            <span className="tabular-nums">Last Block: #{gasData.lastBlock.toLocaleString()}</span>
           ) : (
             <>Updated: {lastUpdated ? lastUpdated.toLocaleTimeString() : 'Never'}</>
           )}
         </span>
-        <span className="flex items-center gap-1">
-          <span className={`w-2 h-2 rounded-full animate-pulse ${USE_MOCK_DATA ? 'bg-[#00d4aa]' : isUsingMockData ? 'bg-[#f7931a]' : 'bg-[#00d4aa]'}`} />
-          {USE_MOCK_DATA ? 'Live' : isUsingMockData ? 'Demo' : 'Live'}
+        <span className="flex items-center gap-2 px-2.5 py-1 bg-[#0d1421]/50 rounded-full">
+          <span className={`w-2 h-2 rounded-full pulse-dot ${USE_MOCK_DATA ? 'bg-[#00d4aa]' : isUsingMockData ? 'bg-[#f7931a]' : 'bg-[#00d4aa]'}`} />
+          <span className="font-medium">{USE_MOCK_DATA ? 'Live' : isUsingMockData ? 'Demo' : 'Live'}</span>
         </span>
       </div>
     </div>
